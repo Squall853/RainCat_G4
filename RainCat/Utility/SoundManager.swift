@@ -42,7 +42,19 @@ class SoundManager : NSObject, AVAudioPlayerDelegate {
     "cat_meow_6.wav",
     "cat_meow_7.mp3"
   ]
-
+    
+    private let fruitsSFX = [
+        "apple.m4a",
+        "banana.m4a",
+        "blackberry.m4a",
+        "cherry.m4a",
+        "kiwi.m4a",
+        "lemon.m4a",
+        "mango.m4a",
+        "orange.m4a",
+        "pineapple.m4a",
+        "watermelon.m4a"
+    ]
   private var soundTempMuted = false
 
   private let move = "move.wav"
@@ -118,7 +130,16 @@ class SoundManager : NSObject, AVAudioPlayerDelegate {
           withKey: "action_sound_effect")
     }
   }
-
+    public func fruits(node : SKNode) {
+        if !UserDefaultsManager.sharedInstance.isMuted && node.action(forKey: "action_sound_effect") == nil {
+            
+            //let selectedSFX = Int(arc4random_uniform(UInt32(fruitsSFX.count)))
+            
+            node.run(SKAction.playSoundFileNamed(fruitsSFX[GameScene.foodIndex], waitForCompletion: true),
+                     withKey: "action_sound_effect")
+        }
+    }
+    
   public static func playLCDPickup(node : SKNode) {
     if !UserDefaultsManager.sharedInstance.isMuted {
       node.run(SKAction.playSoundFileNamed(SoundManager.sharedInstance.lcdPickup, waitForCompletion: true),
